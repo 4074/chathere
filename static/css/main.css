@@ -1,0 +1,125 @@
+
+html, body {
+    background: #f2f2f2;
+}
+
+.content {
+    width: 640px;
+    margin: 20px auto;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+}
+
+.chat-title {
+    height: 24px;
+    line-height: 24px;
+    color: rgba(52,187,171,1);
+    background: #f8f8f8;
+    text-align: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.chat-wrap {
+    border-top: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    height: 600px;
+    background: #fff;
+}
+
+.message-wrap {
+    padding: 20px;
+    height: 500px;
+    overflow: auto;
+}
+
+.message-item {
+    display: flex;
+    min-height: 60px;
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    overflow: hidden;
+}
+.message-avatar img {
+    width: 40px;
+    height: 40px;
+    background: #e2e2e2;
+}
+
+.message-content {
+    flex: 1;
+    margin-right: 200px;
+    margin-left: 10px;
+}
+
+.message-self .message-content {
+    margin-right: 10px;
+    margin-left: 200px;
+}
+
+.message-author {
+    margin-bottom: 4px; 
+}
+
+.message-self .message-author {
+    text-align: right;
+}
+
+.message-text p {
+    background: #f2f2f2;
+    border-radius: 4px;
+    padding: 4px 6px;
+    display: inline-block;
+    min-height: 28px;
+    word-break: break-word;
+}
+
+.message-self .message-text p {
+    float: right;
+    background: rgba(52,187,171,0.8);
+    color: #fff;
+}
+
+.input-wrap {
+    height: 100px;
+    border-top: 1px solid #e2e2e2;
+}
+
+.input-wrap textarea {
+    border: none;
+    box-shadow: none;
+    height: 90px;
+    resize: none;
+    border-radius: 0;
+}
+
+.input-wrap textarea:focus {
+    box-shadow: none;
+}
+
+.message-wrap::-webkit-scrollbar, .input-wrap textarea::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+.message-wrap::-webkit-scrollbar-button, .input-wrap textarea::-webkit-scrollbar-button {
+  display: none;
+}
+
+.message-wrap::-webkit-scrollbar-thumb, .input-wrap textarea::-webkit-scrollbar-thumb {
+  min-height: 32px;
+  background: #d2d2d2;
+  background-clip: padding-box;
+  border: 3px solid #fff;
+  border-radius: 5px;
+}
+
+.message-wrap::-webkit-scrollbar-track, .input-wrap textarea::-webkit-scrollbar-track {
+  background: #fff;
+}

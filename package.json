@@ -1,0 +1,35 @@
+{
+  "name": "chathere",
+  "version": "1.0.0",
+  "description": "a chrome chat extension",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "babel-node src/index.js",
+    "nodemon": "nodemon --watch src/* --watch package.json --exec npm start",
+    "build": "babel src --out-dir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4074/chathere.git"
+  },
+  "author": "4074",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/4074/chathere/issues"
+  },
+  "homepage": "https://github.com/4074/chathere#readme",
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "nodemon": "^1.10.2"
+  }
+}

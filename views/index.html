@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Chat</title>
+    <link rel="shortcut icon"type="image/x-icon" href="data:image/x-icon;,">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
+
+<body>
+    <header>
+    </header>
+    <div class="content">
+        <div class="chat-title">Chat</div>
+        <div class="chat-wrap">
+
+            <div class="message-wrap" id="message-wrap">
+            </div>
+
+            <div class="input-wrap">
+                <textarea class="form-control input-sm" id="input-textarea" placeholder="Say something.."></textarea>
+            </div>
+        </div>
+    </div>
+    <footer>
+    </footer>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/lodash.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/socket.io-1.4.5.js"></script>
+    <script id="template-message-item" type="text/template">
+        <div class="message-item">
+            <div class="message-avatar">
+                <img src="%avatar%">
+            </div>
+            <div class="message-content">
+                <p class="message-author">%author%</p>
+                <div class="message-text">
+                    <p>%message%</p>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script id="template-message-self" type="text/template">
+        <div class="message-item message-self">
+            <div class="message-content">
+                <p class="message-author">%author%</p>
+                <div class="message-text">
+                    <p>%message%</p>
+                </div>
+            </div>
+            <div class="message-avatar">
+                <img src="%avatar%">
+            </div>
+        </div>
+    </script>
+    <script>
+        $(function(){
+            const socket = io.connect('/chat')
+            const template = {
+                item: $('#template-message-item').html(),
+                self: $('#template-message-self').html()
+            }
+            const $messageWrap = $('#message-wrap')
+            const $textarea = $('#input-textarea')
+            let user = {
+                name: '-'
+            }
+
+            listen()
+
+            function listen() {
+                $textarea.on('keydown', function(event) {
+                    const $this = $(this)
+                    if (event.keyCode  === 13) {
+                        if (event.ctrlKey) {
+                            $this.val($this.val() + '\n')
+                        } else {
+                            const text = $this.val()
+                            if (text) {
+                                saySomething(text)
+                                renderMessage({
+                                    avatar: user.avatar,
+                                    author: user.name,
+                                    type: 'self',
+                                    message: text
+                                })
+                                $this.val('')
+                            }
+                            return false
+                        }
+                    }
+                })
+
+                socket.on('message', function(data) {
+                    renderMessage(data)
+                })
+
+                socket.on('user', function(data) {
+                    user.avatar = data.avatar
+                    user.name = data.name
+                })
+            }
+
+            function saySomething(message) {
+                socket.emit('say', _.escape(message))
+            }
+
+            function renderMessage(data) {
+                const message = template[data.type === 'self' ? 'self' : 'item']
+                	.replace('%avatar%', _.escape(data.avatar))
+                    .replace('%author%', _.escape(data.author))
+                    .replace('%message%', data.message.replace(/\n/g, '<br>'))
+
+                $messageWrap.append($(message))
+                $messageWrap.animate({ scrollTop: $messageWrap[0].scrollHeight }, 400)
+            }
+        })
+    </script>
+</body>
+
+</html>
